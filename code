@@ -1,0 +1,708 @@
+#include <stdio.h>
+#include <string.h>
+#include <conio.h>
+#include <stdlib.h>
+
+// STRUCTURE OF PATIENT:-
+typedef struct patient_details{
+        char patient_id[10];
+        char name[50];
+        char age[5];
+        char gender[10];
+        char phone_no[15];
+        char last_visited[50];
+        char nxt_visit[50];
+        char diagnosis[50];
+        char treatment[100]; 
+}pd;
+
+// STRUCTURE OF DOCTOR:-
+typedef struct doctor_details{
+        char doctor_id[10];
+        char name[50];
+        char qualification[100];
+        char designation[20];
+        char shift[50];
+}doc;
+
+// STRUCTURE OF STAFF:-
+typedef struct staff_details{
+        char staff_id[10];
+        char name[50];
+        char designation[20];
+        char shift[50];
+}staff;
+
+// STRUCTURE OF INVENTORY:-
+typedef struct inventory{
+    int oxy;
+    int blood;
+    int vaccines;
+    int beds;
+}in;
+
+// MAKING ARRAYS TO STORE DATA:-
+pd patient[1000];
+doc doctor[500];
+staff stf[1000];
+in count;
+
+// FUNCTION TO ADD PATIENT:-
+void addpatient(pd patient[1000]){
+    int y = 1;//serial number of patient.
+    int x = 0;
+    printf("No. of patients you want to add : ");
+    scanf("%d",&x);
+    for(int i=1;i<=x;i++){
+        printf("\n(*********NOTE*********\nPatient id includes\nfirst 3 letters of name\nthen his age\nthen last 4 digits of his phone no.\n**********************)");
+        printf("\nENTER PATIENT ID : ");
+        scanf("%s",patient[y].patient_id);
+        printf("ENTER NAME : ");
+        scanf("%s",patient[y].name);
+        printf("ENTER AGE : ");
+        scanf("%s",patient[y].age);            
+        printf("ENTER GENDER : ");
+        scanf("%s",patient[y].gender);
+        printf("ENTER PHONE NUMBER : ");
+        scanf("%s",patient[y].phone_no);
+        printf("LAST VISITED ON : ");
+        scanf("%s",patient[y].last_visited);
+        printf("NEXT VISIT DATE : ");
+        scanf("%s",patient[y].nxt_visit);
+        printf("DIAGNOSIS : ");
+        scanf("%s",patient[y].diagnosis);
+        printf("TREATMENT : ");
+        scanf("%s",patient[y].treatment);
+        y++;
+    }
+
+    // ADDING TAKEN DATA INTO FILE
+    FILE* ptr = fopen("Pateint details.txt","w");
+    fprintf(ptr,"                              IIITN CHARITY HOSPITAL ");
+    for(int i = 1;i<y;i++){
+        fprintf(ptr,"\n");
+        fprintf(ptr,"Patient ID :");
+        fputs(patient[i].patient_id,ptr);
+        fprintf(ptr,"\n");
+        fprintf(ptr,"Patient name :");
+        fputs(patient[i].name,ptr);
+        fprintf(ptr,"\n");
+        fprintf(ptr,"Age :");
+        fputs(patient[i].age,ptr);
+        fprintf(ptr,"\n");
+        fprintf(ptr,"Gender :");
+        fputs(patient[i].gender,ptr);
+        fprintf(ptr,"\n");
+        fprintf(ptr,"Phone number :");
+        fputs(patient[i].phone_no,ptr);
+        fprintf(ptr,"\n");
+        fprintf(ptr,"LAST VISITED ON :");
+        fputs(patient[i].last_visited,ptr);
+        fprintf(ptr,"\n");
+        fprintf(ptr,"NEXT VISIT DATE :");
+        fputs(patient[i].nxt_visit,ptr);
+        fprintf(ptr,"\n");
+        fprintf(ptr,"Diagnosis :");
+        fputs(patient[i].diagnosis,ptr);
+        fprintf(ptr,"\n");
+        fprintf(ptr,"Treatment :");
+        fputs(patient[i].treatment,ptr);
+        fprintf(ptr,"\n");
+    }
+    fclose(ptr);
+    printf("\nPATIENT ADDED SUCCESSFULLY");
+    return;
+}
+
+// FUNCTION TO UPDATE PATIENTS:-
+void updatedetails(pd patient[1000]){
+    char str[10];
+    printf("Enter pateint id :");
+    scanf("%s",&str);
+    for(int i=1;i<=1000;i++){
+        if(strcmp(str,patient[i].patient_id)==0){
+            printf("What would you like to update? ");
+            printf("\nName : 1");
+            printf("\nAge : 2");
+            printf("\nGender : 3");
+            printf("\nPhone no. : 4");
+            printf("\nLast visited on : 5");
+            printf("\nNext visit date : 6");
+            printf("\nDiagnosis : 7");
+            printf("\nTreatment : 8");
+            int n;
+            printf("\nENTER KEY : ");
+            scanf("%d",&n);
+            switch(n){
+                case 1:
+                scanf("%s",patient[i].name);
+                printf("\nNew Patient id :");
+                scanf("%s",patient[i].patient_id);
+                break;
+                case 2:
+                scanf("%s",patient[i].age);
+                printf("\nNew Patient id :");
+                scanf("%s",patient[i].patient_id);
+                break;
+                case 3:
+                scanf("%s",patient[i].gender);
+                break;
+                case 4:
+                scanf("%s",patient[i].phone_no);
+                printf("\nNew Patient id :");
+                scanf("%s",patient[i].patient_id);
+                break;
+                case 5:
+                scanf("%s",patient[i].last_visited);
+                break;
+                case 6:
+                scanf("%s",patient[i].nxt_visit);
+                break;
+                case 7:
+                scanf("%s",patient[i].diagnosis);
+                break;
+                case 8:
+                scanf("%s",patient[i].treatment);
+                break;
+                default:
+                printf("INVALID");
+                break;
+            }
+        }
+        break;
+    }
+
+    // UPDATING PATIENTS IN FILE:-
+    int i = 1;
+    FILE* ptr = fopen("Pateint details.txt","w");
+    fprintf(ptr,"                              IIITN CHARITY HOSPITAL ");
+    while(patient[i].patient_id != NULL){
+        fprintf(ptr,"\n");
+        fprintf(ptr,"Patient ID :");
+        fputs(patient[i].patient_id,ptr);
+        fprintf(ptr,"\n");
+        fprintf(ptr,"Patient name :");
+        fputs(patient[i].name,ptr);
+        fprintf(ptr,"\n");
+        fprintf(ptr,"Age :");
+        fputs(patient[i].age,ptr);
+        fprintf(ptr,"\n");
+        fprintf(ptr,"Gender :");
+        fputs(patient[i].gender,ptr);
+        fprintf(ptr,"\n");
+        fprintf(ptr,"Phone number :");
+        fputs(patient[i].phone_no,ptr);
+        fprintf(ptr,"\n");
+        fprintf(ptr,"LAST VISITED ON :");
+        fputs(patient[i].last_visited,ptr);
+        fprintf(ptr,"\n");
+        fprintf(ptr,"NEXT VISIT DATE :");
+        fputs(patient[i].nxt_visit,ptr);
+        fprintf(ptr,"\n");
+        fprintf(ptr,"Diagnosis :");
+        fputs(patient[i].diagnosis,ptr);
+        fprintf(ptr,"\n");
+        fprintf(ptr,"Treatment :");
+        fputs(patient[i].treatment,ptr);
+        fprintf(ptr,"\n");
+        i++;
+    }
+    fclose(ptr);
+    printf("\nPATIENT UPDATED SUCCESSFULLY");
+    return;
+}
+
+// FUNCTION TO REMOVE PATIENTS:-
+void removepatient(pd patient[1000]){
+    char str[10];
+    printf("Enter pateint id :");
+    scanf("%s",&str);
+    for(int i=1;i<=1000;i++){
+        if(strcmp(str,patient[i].patient_id)==0){
+            strcpy(patient[i].age,"NULL");
+            strcpy(patient[i].diagnosis,"NULL");
+            strcpy(patient[i].gender,"NULL");
+            strcpy(patient[i].last_visited,"NULL");
+            strcpy(patient[i].name,"NULL");
+            strcpy(patient[i].nxt_visit,"NULL");
+            strcpy(patient[i].patient_id,"NULL");
+            strcpy(patient[i].phone_no,"NULL");
+            strcpy(patient[i].treatment,"NULL");
+            break;
+        }
+    }
+
+    // REMOVING PATIENTS FROM FILE:-
+    int i = 1;
+    FILE* ptr = fopen("Pateint details.txt","w");
+    fprintf(ptr,"                              IIITN CHARITY HOSPITAL ");
+    while(patient[i].patient_id != "NULL"){
+        fprintf(ptr,"\n");
+        fprintf(ptr,"Patient ID :");
+        fputs(patient[i].patient_id,ptr);
+        fprintf(ptr,"\n");
+        fprintf(ptr,"Patient name :");
+        fputs(patient[i].name,ptr);
+        fprintf(ptr,"\n");
+        fprintf(ptr,"Age :");
+        fputs(patient[i].age,ptr);
+        fprintf(ptr,"\n");
+        fprintf(ptr,"Gender :");
+        fputs(patient[i].gender,ptr);
+        fprintf(ptr,"\n");
+        fprintf(ptr,"Phone number :");
+        fputs(patient[i].phone_no,ptr);
+        fprintf(ptr,"\n");
+        fprintf(ptr,"LAST VISITED ON :");
+        fputs(patient[i].last_visited,ptr);
+        fprintf(ptr,"\n");
+        fprintf(ptr,"NEXT VISIT DATE :");
+        fputs(patient[i].nxt_visit,ptr);
+        fprintf(ptr,"\n");
+        fprintf(ptr,"Diagnosis :");
+        fputs(patient[i].diagnosis,ptr);
+        fprintf(ptr,"\n");
+        fprintf(ptr,"Treatment :");
+        fputs(patient[i].treatment,ptr);
+        fprintf(ptr,"\n");
+        i++;
+    }
+    fclose(ptr);
+    printf("\nPATIENT REMOVED SUCCESSFULLY !!!!!!!");
+    return;
+}
+
+// FUNCTION TO ADD DOCTOR:-
+void add_doctor(doc doctor[500] ){
+    int y = 0;//serial number of DOCTOR.
+    int x;
+    do{
+        printf("\nTake entry: 1");
+        printf("\nExit : 0");
+        printf("\nEnter key :");
+        scanf("%d",&x);
+        if(x==0) break;
+        printf("\n(*********NOTE*********\nDOCTOR id includes\nfirst 3 letters of name\n his/her DESIGNATION\n**********************)");
+        printf("\nENTER DOCTOR ID : ");
+        scanf("%s",doctor[y].doctor_id);
+        printf("\nENTER QUALIFICATION : ");
+        scanf("%s",doctor[y].qualification);
+        printf("ENTER NAME : ");
+        scanf("%s",doctor[y].name);            
+        printf("ENTER DESIGNATION : ");
+        scanf("%s",doctor[y].designation);
+        printf("ENTER SHIFT : ");
+        scanf("%s",doctor[y].shift);
+        y++;
+    }
+    while(x!=0);
+
+    // STORING IN FILE:-
+    FILE* qtr = fopen("Doctor details.txt","w");
+    fprintf(qtr,"                              IIITN CHARITY HOSPITAL ");
+    for(int i = 0;i<y;i++){
+        fprintf(qtr,"\n");
+        fprintf(qtr,"Doctor ID :");
+        fputs(doctor[i].doctor_id,qtr);
+        fprintf(qtr,"\n");
+        fprintf(qtr,"Doctor name :");
+        fputs(doctor[i].name,qtr);
+        fprintf(qtr,"\n");
+        fprintf(qtr,"Qualification :");
+        fputs(doctor[i].qualification,qtr);
+        fprintf(qtr,"\n");
+        fprintf(qtr,"Designation :");
+        fputs(doctor[i].designation,qtr);
+        fprintf(qtr,"\n");
+        fprintf(qtr,"Shift :");
+        fputs(doctor[i].shift,qtr);
+        fprintf(qtr,"\n");
+    }
+    fclose(qtr);
+    printf("\nDOCTOR ADDED SUCCESSFULLY !!!!");
+    return;
+}
+
+// ADDING OTHER STAFF OF HOSPITAL:-
+void add_staff(staff stf[1000] ){
+    int y = 0;//serial number of Staff.
+    int x;
+    do{
+        printf("\nTake entry: 1");
+        printf("\nExit : 0");
+        printf("\nEnter key :");
+        scanf("%d",&x);
+        if(x==0) break;
+        printf("\n(*********NOTE*********\nSTAFF id includes\nfirst 3 letters of name\n his/her DESIGNATION\n**********************)");
+        printf("\nENTER STAFF ID : ");
+        scanf("%s",stf[y].staff_id);
+        printf("ENTER NAME : ");
+        scanf("%s",stf[y].name);            
+        printf("ENTER DESIGNATION : ");
+        scanf("%s",stf[y].designation);
+        printf("ENTER SHIFT : ");
+        scanf("%s",stf[y].shift);
+        y++;
+    }
+    while(x!=0);
+
+    // STORING IN FILE:-
+    FILE* rtr = fopen("Staff details.txt","w");
+    fprintf(rtr,"                              IIITN CHARITY HOSPITAL ");
+    for(int i = 0;i<y;i++){
+        fprintf(rtr,"\n");
+        fprintf(rtr,"Staff ID :");
+        fputs(stf[i].staff_id,rtr);
+        fprintf(rtr,"\n");
+        fprintf(rtr,"Staff name :");
+        fputs(stf[i].name,rtr);
+        fprintf(rtr,"\n");
+        fprintf(rtr,"Designation :");
+        fputs(stf[i].designation,rtr);
+        fprintf(rtr,"\n");
+        fprintf(rtr,"Shift :");
+        fputs(stf[i].shift,rtr);
+        fprintf(rtr,"\n");
+    }
+    fclose(rtr);
+    printf("\nSTAFF ADDED SUCCESSFULLY!!!!");
+    return;
+}
+
+// FUNCTION TO READ PATIENT FILE:-
+void view_patient(){
+    FILE* ptr = fopen("Patient details.txt","r");
+    printf("\n***********************************************************************\n");
+    char str[10000];
+    while(fgets(str,10000,ptr) !=NULL) {
+        printf("%s",ptr);
+    }
+    fclose(ptr);
+    printf("\n***********************************************************************\n");
+    return;
+}
+
+// FUNCTION TO READ DOCTOR FILE:-
+void view_doctor(){
+    FILE* qtr = fopen("Doctor details.txt","r");
+    printf("\n***********************************************************************\n");
+    char str[10000];
+    while(fgets(str,10000,qtr) !=NULL) {
+        printf("%s",qtr);
+    }
+    fclose(qtr);
+    printf("\n***********************************************************************\n");
+    return;
+}
+
+// FUNCTION TO READ STAFF FILE :-
+void view_staff(){
+    FILE* rtr = fopen("Staff details.txt","r");
+    printf("\n***********************************************************************\n");
+    char str[10000];
+    while(fgets(str,10000,rtr) != NULL) {
+        printf("%s",str);
+    }
+    fclose(rtr);
+    printf("\n***********************************************************************\n");
+    return;
+}
+
+// FUNCTION TO BOOK APPOINTMENT:-
+int bookapp(doc doctor[1000]){
+    for(int i=0;i<1000;i++){
+        printf("\n%s : %d\n",doctor[i].name,i);
+    }
+
+    // CREATING APPOINTMENT LETTER:-
+    FILE* str = fopen("Appointment.txt","w");
+    int x;
+    char name[50],date[10],time[10];
+    printf("\nenter key : ");
+    scanf("%d",&x);
+    for(int i=0;i<1000;i++){
+        if(i==x){
+            printf("\nEnter name :");
+            scanf("%s",name);
+            printf("\nEnter date :");
+            scanf("%s",date);
+            printf("\nEnter time :");
+            scanf("%s",time);
+            fprintf(str,"                              IIITN CHARITY HOSPITAL ");
+            fprintf(str,"\n");
+            fprintf(str,"Name :");
+            fputs(name,str);
+            fprintf(str,"\n");
+            fprintf(str,"APPOINTMENT WITH DOCTOR :");
+            fputs(doctor[i].name,str);
+            fprintf(str,"\n");
+            fprintf(str,"DATE :");
+            fputs(date,str);
+            fprintf(str,"\n");
+            fprintf(str,"TIME :");
+            fputs(time,str);
+            fprintf(str,"\n");
+            fprintf(str,"\n");
+            fprintf(str,"\n");
+            fprintf(str,"NOTE :- CONTACT OUR CUSTOMER HELPLINE NUMBER FOR UPDATING OR CANCELLING.\nCUSTOMER CARE NUMBER : 9714 XXX XXX");
+            break;
+        }
+    }
+    printf("\nAPPOINTMENT BOOKED SUCCESSFULLY!!!!");
+    return 1;
+}
+
+// FUNCTION TO PRINT APPOINTMENT LETTER
+void view_app(){
+    FILE* str = fopen("Appointment.txt","r");
+    printf("\n***********************************************************************\n");
+    char btr[10000];
+    while(fgets(btr,10000,str) != NULL) {
+        printf("%s",btr);
+    }
+    fclose(str);
+    printf("\n***********************************************************************\n");
+    return;
+}
+
+// FUNCTION TO GENERATE BILL
+int genbill(pd patient[1000]){
+    char id[20];
+    printf("\nEnter patient id : ");
+    scanf("%s",id);
+    int key =0 ;
+    int x[4];
+    for(int i=1;i<1000;i++){
+        if(strcmp(id,patient[i].patient_id)==0){
+            key=i;
+            printf("\n Enter Doctor fees :");
+            scanf("%d",&x[0]);
+            printf("\n Enter  medicine charges :");
+            scanf("%d",&x[1]);
+            printf("\n Enter room charges(if any) :");
+            scanf("%d",&x[2]);
+            printf("\n Enter Check-UP charges (X-Ray/CT Scan/Blood test etc) :");
+            scanf("%d",&x[3]);
+            break;
+        }
+    }
+    int sum=0;
+    for(int i=0;i<4;i++){
+        sum = sum + x[i];
+    }
+    float tsum= sum + ((sum*18)/100);
+
+    // MAKING RECIEPT OF BILL:-
+    FILE* ttr = fopen("Bill.txt","w");
+    fprintf(ttr,"                              IIITN CHARITY HOSPITAL ");
+    fprintf(ttr,"\n");
+    fprintf(ttr,"PATIENT NAME :");
+    fputs(patient[key].name,ttr);
+    fprintf(ttr,"\n");
+    fprintf(ttr,"DOCTOR FEES :");
+    fprintf(ttr,"%d",x[0]);
+    fprintf(ttr,"\n");
+    fprintf(ttr,"MEDICINE CHARGES :");
+    fprintf(ttr,"%d",x[1]);
+    fprintf(ttr,"\n");
+    fprintf(ttr,"ROOM CHARGES :");
+    fprintf(ttr,"%d",x[2]);
+    fprintf(ttr,"\n");
+    fprintf(ttr,"CHECK-UP CHARGES :");
+    fprintf(ttr,"%d",x[3]);
+    fprintf(ttr,"\n");
+    fprintf(ttr,"TOTAL :");
+    fprintf(ttr,"%d",sum);
+    fprintf(ttr,"\n");
+    fprintf(ttr,"TOTAL BILL (WITH GST) : ");
+    fprintf(ttr,"%.2f",tsum);
+    fclose(ttr);
+    printf("BILL GENERATED SUCCESSFULLY !!!!!\nCHECK BILL FILE FOR RECIEPT.");
+    return 1;
+}
+
+// FUNCTION TO PRINT BILL RECIEPT:-
+void view_bill(){
+    FILE* ttr = fopen("Bill.txt","r");
+    printf("\n***********************************************************************\n");
+    char str[10000];
+    while(fgets(str,10000,ttr) != NULL) {
+        printf("%s",str);
+    }
+    fclose(ttr);
+    printf("\n***********************************************************************\n");
+    return;
+}
+
+// FUNCTION OF INVENTORY MANAGEMENT :-
+int check_inventory(in count){
+    int arr[4];
+    printf("\nEnter MIN no. of oxygen cylinders needed: ");
+    scanf("%d",&arr[0]);
+    printf("\nEnter MIN no. of blood pouches needed: ");
+    scanf("%d",&arr[1]);
+    printf("\nEnter MIN no. of vaccines needed: ");
+    scanf("%d",&arr[2]);
+    printf("\nEnter MIN no. of beds needed: ");
+    scanf("%d",&arr[3]);
+    printf("\nEnter no. of oxygen cylinders present : ");
+    scanf("%d",&count.oxy);
+    printf("\nEnter no. of blood pouches present : ");
+    scanf("%d",&count.blood);
+    printf("\nEnter no. of vaccines present : ");
+    scanf("%d",&count.vaccines);
+    printf("\nEnter no. of beds present : ");
+    scanf("%d",&count.beds);
+
+    // MAKING DATA STORED IN FILE:-
+    FILE* utr = fopen("Inventory.txt","w");
+    fprintf(utr,"                              IIITN CHARITY HOSPITAL ");
+    fprintf(utr,"\n\n");
+    fprintf(utr,"MINIMUM REQUIRED :-");
+    fprintf(utr,"\n\n");
+    fprintf(utr,"OXYGEN CYLINDERS :");
+    fprintf(utr,"%d",arr[0]);
+    fprintf(utr,"\n");
+    fprintf(utr,"BLOOD POUCHES :");
+    fprintf(utr,"%d",arr[1]);
+    fprintf(utr,"\n");
+    fprintf(utr,"VACCINES :");
+    fprintf(utr,"%d",arr[2]);
+    fprintf(utr,"\n");
+    fprintf(utr,"BEDS :");
+    fprintf(utr,"%d",arr[3]);
+    fprintf(utr,"\n");
+    fprintf(utr,"CURRENTLY PRESENT :-");
+    fprintf(utr,"\n\n");
+    fprintf(utr,"OXYGEN CYLINDERS :");
+    fprintf(utr,"%d",count.oxy);
+    fprintf(utr,"\n");
+    fprintf(utr,"BLOOD POUCHES :");
+    fprintf(utr,"%d",count.blood);
+    fprintf(utr,"\n");
+    fprintf(utr,"VACCINES :");
+    fprintf(utr,"%d",count.vaccines);
+    fprintf(utr,"\n");
+    fprintf(utr,"BEDS :");
+    fprintf(utr,"%d",count.beds);
+    fprintf(utr,"\n");
+    if(count.oxy>=arr[0] && count.blood>=arr[1] && count.vaccines>=arr[2] && count.beds>=arr[3]){
+        fprintf(utr,"\n\nNICE MANAGEMENT!!!!!\nINVENTORY IS SUFFICIENT\n");
+    }
+    else{
+        fprintf(utr,"\n\n!!!!!!URGENTLY ADD!!!!!!!! :\n");
+        if(count.oxy<arr[0]) {
+            fprintf(utr,"OXYGEN CYLINDERS :");
+            fprintf(utr,"%d",arr[0]-count.oxy);
+            fprintf(utr,"\n");
+        }
+        if(count.blood<arr[1]) {
+            fprintf(utr,"BLOOD POUCHES :");
+            fprintf(utr,"%d",arr[1]-count.blood);
+            fprintf(utr,"\n");
+        }
+        if(count.vaccines<arr[2]) {
+            fprintf(utr,"VACCINES :");
+            fprintf(utr,"%d",arr[2]-count.vaccines);
+            fprintf(utr,"\n");
+        }
+        if(count.beds<arr[3]) {
+            fprintf(utr,"OXYGEN CYLINDERS :");
+            fprintf(utr,"%d",arr[3]-count.beds);
+            fprintf(utr,"\n");
+        }
+    }
+    fclose(utr);
+    return 1;
+}
+
+// REVIEWING INVENTORY:-
+void view_inventory(){
+    FILE* utr = fopen("Inventory.txt","r");
+    printf("\n***********************************************************************\n");
+    char str[10000];
+    while(fgets(str,10000,utr) != NULL) {
+        printf("%s",str);
+    }
+    fclose(utr);
+    printf("\n***********************************************************************\n");
+    return;
+}
+
+int main(){
+    int n;
+    FILE* ptr = fopen("Pateint details.txt","a");
+    FILE* qtr = fopen("Doctor details.txt","a");
+    FILE* rtr = fopen("Staff details.txt","a");
+    FILE* str = fopen("Appointment.txt","a");
+    FILE* ttr = fopen("Bill.txt","a");
+    FILE* utr = fopen("Inventory.txt","a");
+    printf("                                    IIITN CHARITY HOSPITAL ");
+    printf("\n\n                                       WELCOME!!!");
+    do{
+        printf("\nManage Patient : 1");
+        printf("\nManage Staff : 2");
+        printf("\nBook Appointment : 3");
+        printf("\nGenerate Bill : 4");
+        printf("\nInventory Management : 5");
+        printf("\nEXIT : 6");
+        printf("\nEnter key :");
+        scanf("\n%d",&n);
+        
+        if(n==1) {
+            int x;
+            do{
+                printf("\nAdd patient : 1");
+                printf("\nUpdate pateint details : 2");
+                printf("\nRemove Patient : 3");
+                printf("\nRemove Patient : 4");
+                printf("\nEXIT : 5");
+                printf("\nEnter key : ");
+                scanf("%d",&x);
+                if(x==1) addpatient(patient);
+                if(x==2) updatedetails(patient);
+                if(x==3) removepatient(patient);
+                if(x==4) view_patient();
+            }
+            while(x!=5);
+        }
+        if(n==2){
+            int x;
+            do{
+                printf("\nAdd doctor : 1");
+                printf("\nAdd staff : 2");
+                printf("\nview details : 3");
+                printf("\nEXIT : 4");
+                printf("\nEnter key : ");
+                scanf("%d",&x);
+                if(x==1) add_doctor(doctor);
+                if(x==2) add_staff(stf);
+                if(x==3) {
+                    int b;
+                    printf("\nView doctor details : 1");
+                    printf("\nView staff details : 2");
+                    printf("\nEnter key : ");
+                    scanf("%d",&b);
+                    if(b==1) view_doctor();
+                    if(b==2) view_staff();
+                }
+            }
+            while(x!=4);
+        }
+        if(n==3) {
+            int p = bookapp(doctor);
+            if(p==1) view_app();
+        }
+        if(n==4) {
+            int p = genbill(patient);
+            if(p==1) view_bill();
+        }
+        if(n==5) {
+            int p = check_inventory(count);
+            if(p==1) view_inventory();
+        }
+    }
+    while(n!=6);
+    if(n==6) printf("*********THANK YOU***********");
+    return 0; 
+}
